@@ -17,7 +17,7 @@ services:
       - "389:389"
 
   keycloak:
-    image: quay.io/keycloak/keycloak:latest   # latest GA at time of writing
+    image: quay.io/keycloak/keycloak:latest
     container_name: keycloak
     environment:
       KEYCLOAK_ADMIN: admin
