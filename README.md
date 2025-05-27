@@ -21,21 +21,21 @@ The LDAP server is initialized with:
 ## Managing LDAP Users
 ### Verify LDAP Users
 ```shell
-docker exec ldap ldapsearch \
-  -x \
-  -D "cn=admin,dc=example,dc=com" \
-  -w adminpassword \
-  -b "dc=example,dc=com" \
-  "(objectClass=inetOrgPerson)" \
+docker exec ldap ldapsearch `
+  -x `
+  -D "cn=admin,dc=example,dc=com" `
+  -w adminpassword `
+  -b "dc=example,dc=com" `
+  "(objectClass=inetOrgPerson)" `
   cn mail
 ```
 ### Modify LDAP User
 ```shell
-docker exec ldap ldapmodify \
-  -x \
-  -H "ldap://127.0.0.1:389" \
-  -D "cn=admin,dc=example,dc=com" \
-  -w adminpassword \
+docker exec ldap ldapmodify `
+  -x `
+  -H "ldap://127.0.0.1:389" `
+  -D "cn=admin,dc=example,dc=com" `
+  -w adminpassword `
   -f /container/service/slapd/assets/config/bootstrap/ldif/custom/modify-carol.ldif
 ```
 ## Configuring Keycloak LDAP Federation
