@@ -16,18 +16,50 @@ services:
     ports:
       - "389:389"
 
+  postgres:
+    image: postgres:17.4-bookworm
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: keycloak
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    restart: unless-stopped
+
   keycloak:
-    image: quay.io/keycloak/keycloak:latest
+    image: quay.io/keycloak/keycloak:26.2.0
     container_name: keycloak
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
-    command: ["start-dev"]
+
+      # Database configuration
+      KC_DB: postgres
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: password
+      KC_DB_URL_HOST: postgres
+      KC_DB_URL_DATABASE: keycloak
+      KC_DB_URL_PORT: 5432
+
+      # Logging configuration
+      KC_LOG_LEVEL: DEBUG
+      ROOT_LOGLEVEL: DEBUG
+
     ports:
-      - "8085:8080"
+      - "8000:8080"
+    volumes:
+      - ./providers:/opt/keycloak/providers
+      - ./themes:/opt/keycloak/themes
+      - ./data:/opt/keycloak/data
     depends_on:
-      - ldap
+      - postgres
+    command: [ "start-dev" ]
+    restart: unless-stopped
 
 volumes:
+  postgres:
   ldap_data:
   ldap_config:
