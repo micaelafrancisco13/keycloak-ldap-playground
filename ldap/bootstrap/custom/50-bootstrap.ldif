@@ -1,0 +1,31 @@
+# 1. Only create your OU under the existing base
+dn: ou=Users,dc=example,dc=com
+objectClass: organizationalUnit
+ou: Users
+
+# 2. Sample user: Alice
+dn: uid=alice,ou=Users,dc=example,dc=com
+objectClass: inetOrgPerson
+cn: Alice Smith
+sn: Smith
+uid: alice
+mail: alice@example.com
+userPassword: password123
+
+# 3. Sample user: Bob
+dn: uid=bob,ou=Users,dc=example,dc=com
+objectClass: inetOrgPerson
+cn: Bob Johnson
+sn: Johnson
+uid: bob
+mail: bob@example.com
+userPassword: password123
+
+# 4. Sample user: Carol
+dn: uid=carol,ou=Users,dc=example,dc=com
+objectClass: inetOrgPerson
+cn: Carol Lee
+sn: Lee
+uid: carol
+mail: carol@example.com
+userPassword: password123

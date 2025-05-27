@@ -1,0 +1,7 @@
+dn: uid=carol,ou=Users,dc=example,dc=com
+changetype: modify
+replace: cn
+cn: CarolineE Lee
+-
+replace: mail
+mail: carolineE@example.com

@@ -1,0 +1,33 @@
+services:
+  ldap:
+    image: osixia/openldap:latest
+    container_name: ldap
+    command: ["--copy-service"]
+    environment:
+      LDAP_ORGANISATION:       "Example Org"
+      LDAP_DOMAIN:             "example.com"
+      LDAP_BASE_DN:            "dc=example,dc=com"
+      LDAP_ADMIN_PASSWORD:     "adminpassword"
+      LDAP_TLS:                "false"
+    volumes:
+      - ./ldap/bootstrap/custom:/container/service/slapd/assets/config/bootstrap/ldif/custom
+      - ldap_data:/var/lib/ldap
+      - ldap_config:/etc/ldap/slapd.d
+    ports:
+      - "389:389"
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest   # latest GA at time of writing
+    container_name: keycloak
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    command: ["start-dev"]
+    ports:
+      - "8080:8080"
+    depends_on:
+      - ldap
+
+volumes:
+  ldap_data:
+  ldap_config:
